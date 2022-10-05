@@ -18,17 +18,22 @@ let volumeValue = 0.5;
 video.volume = volumeValue;
 
 const handlePlayClick = (event) => {
-  if (event.type === "keydown") {
-    if (event.code !== "Space") {
-      return;
-    }
-  }
   if (video.paused) {
     video.play();
   } else {
     video.pause();
   }
   playBtnIcon.classList = video.paused ? "fas fa-play" : "fas fa-pause";
+};
+
+const handleKeydown = (event) => {
+  if (event.target === document.body && event.code === "Space") {
+    event.preventDefault();
+    handlePlayClick();
+  } else if (event.target === document.body && event.keyCode === 70) {
+    event.preventDefault();
+    handleFullscreen();
+  }
 };
 
 const handleMute = (event) => {
@@ -147,6 +152,6 @@ video.addEventListener("mousemove", handleMouseMove);
 video.addEventListener("mouseleave", handleMouseLeave);
 
 video.addEventListener("click", handlePlayClick);
-window.addEventListener("keydown", handlePlayClick);
+window.addEventListener("keydown", handleKeydown);
 
 video.addEventListener("ended", handleEnded);
