@@ -35,6 +35,7 @@ app.use((req, res, next) => {
   next();
 });
 */
+//-aws 연결 후 동영상 썸네일이 나오지 않는 오류 해결
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.header(
