@@ -68,8 +68,11 @@ const handleVolumeChange = (event) => {
 };
 
 const formatTime = (seconds) => {
-  const startIdx = seconds >= 3600 ? 11 : 14;
-  return new Date(seconds * 1000).toISOString().substring(startIdx, 19);
+  if (seconds >= 3600 * 1000) {
+    return new Date(seconds * 1000).toISOString().substring(11, 19);
+  } else {
+    return new Date(seconds * 1000).toISOString().substring(14, 19);
+  }
 };
 
 const handleLoadedMetadata = () => {
@@ -89,20 +92,21 @@ const handleTimelineChange = (event) => {
   const {
     target: { value },
   } = event;
-
+  /*
   if (!setVideoPlayStatus) {
     videoPlayStatus = video.paused ? false : true;
     setVideoPlayStatus = true;
   }
   video.pause();
+*/
   video.currentTime = value;
 };
-
+/*
 const handleTimelineSet = () => {
   videoPlayStatus ? video.play() : video.pause();
   setVideoPlayStatus = false;
 };
-
+*/
 const handleFullscreen = () => {
   const fullscreen = document.fullscreenElement;
   if (fullscreen) {
@@ -149,7 +153,7 @@ video.readyState
 //video.addEventListener("loadedmetadata", handleLoadedMetadata);
 video.addEventListener("timeupdate", handleTimeUpdate);
 timeline.addEventListener("input", handleTimelineChange);
-timeline.addEventListener("change", handleTimelineSet);
+//timeline.addEventListener("change", handleTimelineSet);
 fullScreenBtn.addEventListener("click", handleFullscreen);
 video.addEventListener("mousemove", handleMouseMove);
 video.addEventListener("mouseleave", handleMouseLeave);
